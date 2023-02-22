@@ -1,4 +1,4 @@
-import client from "@/gate/Config";
+import client from "@/gate/config";
 export const useRequest = () => {
   const request = {
     //fix the params type
@@ -7,7 +7,7 @@ export const useRequest = () => {
         .get(path, {
           params: params,
         })
-        .then((res) => res)
+        .then((res) => res.data)
         .catch((err) => err);
     },
   };

@@ -1,35 +1,32 @@
-import { getCatCategories, getCatImagesByCategoryId } from "@/services";
-import { useQuery } from "@tanstack/react-query";
+import { Sidebar } from "@/components/Sidebar";
+import { CatImages } from "@/components/Images";
+import styled, { createGlobalStyle } from "styled-components";
+
+const GlobalStyles = createGlobalStyle`
+  body {
+    margin: 0;
+    padding: 0;
+  }
+`;
+
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+`;
 
 const HomePage = () => {
-  const {
-    isLoading: catCategoriesLoading,
-    isError: catCategoriesError,
-    data: catCategoriesData,
-    isPreviousData: catCategoriesPerivousData,
-  } = useQuery(["catCategories"], getCatCategories);
-
-  const categoryId = "1",
-    limit = "10";
-
-  const {
-    isLoading: catImagesLoading,
-    isError: catImagesError,
-    data: catImagesData,
-    isPreviousData: catImagesPreviousData,
-  } = useQuery(["catImages", categoryId, limit], () =>
-    getCatImagesByCategoryId(categoryId, limit)
-  );
-
-  if (catCategoriesData && catImagesData) {
-    console.log("CATEGORIES", catCategoriesData);
-    console.log("IMAGES", catImagesData);
-  }
-
   return (
-    <div>
-      <h1>asghar</h1>
-    </div>
+    <>
+      <GlobalStyles />
+      <Container>
+        <Sidebar />
+        <CatImages />
+      </Container>
+    </>
   );
 };
 
