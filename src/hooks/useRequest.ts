@@ -7,7 +7,7 @@ export const useRequest = () => {
         .get(path, {
           params: params,
         })
-        .then((res) => res)
+        .then((res) => res.data)
         .catch((err) => err);
     },
   };

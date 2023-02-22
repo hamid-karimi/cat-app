@@ -1,34 +1,40 @@
-import { getCatCategories, getCatImagesByCategoryId } from "@/services";
-import { useQuery } from "@tanstack/react-query";
+import { createContext, useState } from "react";
+import { Sidebar } from "@/components/Sidebar";
+import { CatImages } from "@/components/Images";
+
+interface MyContextType {
+  value: string;
+  updateCategoryValue: (newValue: string) => void;
+  limit: string;
+  updateLimit: (newValue: string) => void;
+}
+
+export const MyContext = createContext<MyContextType>({
+  value: "",
+  updateCategoryValue: () => {},
+  limit: "10",
+  updateLimit: () => {},
+});
 
 const HomePage = () => {
-  const {
-    isLoading: catCategoriesLoading,
-    isError: catCategoriesError,
-    data: catCategoriesData,
-    isPreviousData: catCategoriesPerivousData,
-  } = useQuery(["catCategories"], getCatCategories);
+  const [value, setValue] = useState<string>("1");
+  const [limit, setLimit] = useState<string>("10");
 
-  const categoryId = "1",
-    limit = "10";
+  const updateCategoryValue = (newValue: string) => {
+    setValue(newValue);
+  };
 
-  const {
-    isLoading: catImagesLoading,
-    isError: catImagesError,
-    data: catImagesData,
-    isPreviousData: catImagesPreviousData,
-  } = useQuery(["catImages", categoryId, limit], () =>
-    getCatImagesByCategoryId(categoryId, limit)
-  );
-
-  if (catCategoriesData && catImagesData) {
-    console.log("CATEGORIES", catCategoriesData);
-    console.log("IMAGES", catImagesData);
-  }
+  const updateLimit = (newValue: string) => {
+    setLimit(newValue);
+  };
 
   return (
     <div>
-      <h1>asghar</h1>
+      <MyContext.Provider
+        value={{ value, updateCategoryValue, limit, updateLimit }}>
+        <Sidebar />
+        <CatImages />
+      </MyContext.Provider>
     </div>
   );
 };
