@@ -1,44 +1,61 @@
-import { getCatImagesByCategoryId } from "@/services";
-import { useQuery } from "@tanstack/react-query";
-import { useContext } from "react";
+import { useState } from "react";
 import styled from "styled-components";
-import { MyContext } from "@/pages/home";
+import { v4 as uuidv4 } from "uuid";
+import { useFetchImages } from "@/services/useFetchImages";
 
+const ImagesContainer = styled.div`
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  grid-auto-rows: minmax(100px, auto);
+  gap: 15px;
+  width: 70%;
+  height: auto;
+  align-items: center;
+  padding: 5%;
+`;
 const ImgWrapper = styled.div`
   background-color: black;
   margin-bottom: 16px;
   border-radius: 8px;
+
   > img {
+    object-fit: cover;
     height: 100%;
-    max-width: 100%;
+    width: 100%;
+    transition: 0.3s ease;
     border-radius: 8px;
+  }
+
+  &:hover img {
+    transform: scale(1.15);
   }
 `;
 
 export const CatImages = () => {
-  const myContext = useContext(MyContext);
-  const categoryId = myContext?.value;
-  const limit = myContext.limit;
+  const [limit, setLimit] = useState("10");
+  const { data, imagesData, isLoading } = useFetchImages(limit);
 
-  const { isLoading, isError, isSuccess, data, isPreviousData } = useQuery(
-    ["catImages", categoryId, limit],
-    () => getCatImagesByCategoryId(categoryId, limit)
-  );
+  const handleLoadMore = () => {
+    setLimit((+limit + 10).toString());
+  };
 
-  function handleLoadMore(): void {
-    myContext?.updateLimit((Number(myContext.limit) + 10).toString());
-  }
+  if (isLoading) return <span>Loading...</span>;
 
   return (
     <>
-      {isSuccess &&
-        data.map((image: any) => (
-          <ImgWrapper key={image.id}>
-            <img src={image.url} alt={image.id} />
-          </ImgWrapper>
-        ))}
-
-      <button onClick={() => handleLoadMore()}>load more</button>
+      <ImagesContainer>
+        {data?.length > 0 &&
+          imagesData.flatMap((images) => {
+            return images.map((image: { id: string; url: string }) => {
+              return (
+                <ImgWrapper key={uuidv4()}>
+                  <img loading='lazy' src={image.url} alt={image.id} />
+                </ImgWrapper>
+              );
+            });
+          })}
+        <button onClick={() => handleLoadMore()}>load more</button>
+      </ImagesContainer>
     </>
   );
 };

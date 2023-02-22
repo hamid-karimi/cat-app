@@ -1,41 +1,32 @@
-import { createContext, useState } from "react";
 import { Sidebar } from "@/components/Sidebar";
 import { CatImages } from "@/components/Images";
+import styled, { createGlobalStyle } from "styled-components";
 
-interface MyContextType {
-  value: string;
-  updateCategoryValue: (newValue: string) => void;
-  limit: string;
-  updateLimit: (newValue: string) => void;
-}
+const GlobalStyles = createGlobalStyle`
+  body {
+    margin: 0;
+    padding: 0;
+  }
+`;
 
-export const MyContext = createContext<MyContextType>({
-  value: "",
-  updateCategoryValue: () => {},
-  limit: "10",
-  updateLimit: () => {},
-});
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+`;
 
 const HomePage = () => {
-  const [value, setValue] = useState<string>("1");
-  const [limit, setLimit] = useState<string>("10");
-
-  const updateCategoryValue = (newValue: string) => {
-    setValue(newValue);
-  };
-
-  const updateLimit = (newValue: string) => {
-    setLimit(newValue);
-  };
-
   return (
-    <div>
-      <MyContext.Provider
-        value={{ value, updateCategoryValue, limit, updateLimit }}>
+    <>
+      <GlobalStyles />
+      <Container>
         <Sidebar />
         <CatImages />
-      </MyContext.Provider>
-    </div>
+      </Container>
+    </>
   );
 };
 
