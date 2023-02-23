@@ -1,14 +1,14 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
-type image = {
+type Image = {
   id: string;
   url: string;
   width: number;
   height: number;
 };
 export interface ImagesState {
-  images: image[];
+  images: Image[];
 }
 
 const initialState: ImagesState = {
@@ -20,7 +20,7 @@ export const imageSlice = createSlice({
   initialState,
   extraReducers: (builder) => builder.addCase(revertAll, () => initialState),
   reducers: {
-    setImagesData: (state, action: PayloadAction<image>) => {
+    setImagesData: (state, action: PayloadAction<Image>) => {
       state.images.push(action.payload);
     },
   },

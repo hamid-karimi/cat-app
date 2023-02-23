@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, EnhancedStore } from "@reduxjs/toolkit";
 import reducer, { ImagesState, setImagesData, revertAll } from "../imageSlice";
 
 const IMAGES_MOCK = {
@@ -9,7 +9,7 @@ const IMAGES_MOCK = {
 };
 
 describe("imageSlice", () => {
-  let store: ReturnType<typeof configureStore>;
+  let store: EnhancedStore<{ images: ImagesState }, any>;
 
   beforeEach(() => {
     store = configureStore({ reducer });
