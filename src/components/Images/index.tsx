@@ -3,12 +3,17 @@ import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
 import { useFetchImages } from "@/services/useFetchImages";
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+`;
 const ImagesContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   grid-auto-rows: minmax(100px, auto);
   gap: 15px;
-  width: 70%;
+  width: 100%;
   height: auto;
   align-items: center;
   padding: 5%;
@@ -31,31 +36,52 @@ const ImgWrapper = styled.div`
   }
 `;
 
+const LoadMoreButton = styled.button`
+  width: 50%;
+  height: 30px;
+  padding: 20px;
+  margin: 20px auto;
+  display: block;
+  cursor: pointer;
+`;
+
+const LoadingIndicator = styled.span`
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+`;
+
 export const CatImages = () => {
   const [limit, setLimit] = useState("10");
-  const { data, imagesData, isLoading } = useFetchImages(limit);
+  const { data, imagesData, isLoading, error } = useFetchImages(limit);
 
   const handleLoadMore = () => {
-    setLimit((+limit + 10).toString());
+    const newLimit = (+limit + 10).toString();
+    setLimit(newLimit);
   };
 
-  if (isLoading) return <span>Loading...</span>;
+  if (error) return <span>Error loading images</span>;
+  if (isLoading && imagesData.length === 0) return <span>Loading...</span>;
 
   return (
-    <>
+    <Container>
       <ImagesContainer>
-        {data?.length > 0 &&
-          imagesData.flatMap((images) => {
-            return images.map((image: { id: string; url: string }) => {
-              return (
-                <ImgWrapper key={uuidv4()}>
-                  <img loading='lazy' src={image.url} alt={image.id} />
-                </ImgWrapper>
-              );
-            });
-          })}
-        <button onClick={() => handleLoadMore()}>load more</button>
+        {imagesData.flatMap((images) => {
+          return images.map((image: { id: string; url: string }) => {
+            return (
+              <ImgWrapper key={uuidv4()}>
+                <img loading='lazy' src={image.url} alt={image.id} />
+              </ImgWrapper>
+            );
+          });
+        })}
       </ImagesContainer>
-    </>
+      {data && (
+        <LoadMoreButton onClick={() => handleLoadMore()}>
+          Load more
+        </LoadMoreButton>
+      )}
+      {isLoading && <LoadingIndicator>Loading...</LoadingIndicator>}
+    </Container>
   );
 };
