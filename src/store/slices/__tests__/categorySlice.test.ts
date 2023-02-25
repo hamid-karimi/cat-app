@@ -1,7 +1,5 @@
-import categoryReducer, {
-  CategoryState,
-  setCategoryId,
-} from "../categorySlice";
+import { CategoryState } from "@/store/types/category.types.d";
+import categoryReducer, { setCategoryId } from "../categorySlice";
 
 describe("categorySlice", () => {
   let initialState: CategoryState;

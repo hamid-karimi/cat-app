@@ -1,9 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-
-export interface CategoryState {
-  id: number | undefined;
-}
+import { CategoryState } from "../types/category.types.d";
 
 const initialState: CategoryState = {
   id: undefined,

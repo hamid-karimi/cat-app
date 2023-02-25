@@ -1,62 +1,10 @@
 import { useState } from "react";
-import styled from "styled-components";
+import * as Styled from "./index.styles";
 import { v4 as uuidv4 } from "uuid";
 import { useFetchImages } from "@/services/useFetchImages";
-
-type images = {
-  id: string;
-  url: string;
-  width: number;
-  height: number;
-};
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 70%;
-`;
-const ImagesContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  grid-auto-rows: minmax(100px, auto);
-  gap: 15px;
-  width: 100%;
-  height: auto;
-  align-items: center;
-  padding: 5%;
-`;
-const ImgWrapper = styled.div`
-  background-color: black;
-  margin-bottom: 16px;
-  border-radius: 8px;
-
-  > img {
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-    transition: 0.3s ease;
-    border-radius: 8px;
-  }
-
-  &:hover img {
-    transform: scale(1.15);
-  }
-`;
-
-const LoadMoreButton = styled.button`
-  width: 50%;
-  height: 30px;
-  padding: 20px;
-  margin: 20px auto;
-  display: block;
-  cursor: pointer;
-`;
-
-const LoadingIndicator = styled.span`
-  display: block;
-  text-align: center;
-  margin-top: 20px;
-`;
+import Button from "@/components/Common/Button";
+import Image from "@/components/Common/Image";
+import { ImageProps } from "@/components/types/images.types";
 
 export const CatImages = () => {
   const [limit, setLimit] = useState("10");
@@ -69,30 +17,36 @@ export const CatImages = () => {
 
   if (error) return <span>Error loading images</span>;
   if (isLoading && imagesData.length === 0)
-    return <LoadingIndicator>Images Loading...</LoadingIndicator>;
+    return <Styled.LoadingIndicator>Images Loading...</Styled.LoadingIndicator>;
 
   return (
-    <Container>
-      <ImagesContainer>
+    <Styled.Container>
+      <Styled.ImagesContainer>
         {imagesData.flatMap((images) => {
-          return images.map((image: images) => {
+          return images.map((image: ImageProps) => {
             return (
-              <ImgWrapper key={uuidv4()}>
-                <img loading='lazy' src={image.url} alt={image.id} />
-              </ImgWrapper>
+              <Image
+                key={uuidv4()}
+                url={image.url}
+                id={image.id}
+                width={image.width}
+                height={image.height}
+              />
             );
           });
         })}
-      </ImagesContainer>
-      {isLoading && <LoadingIndicator>Load more images...</LoadingIndicator>}
+      </Styled.ImagesContainer>
+      {isLoading && (
+        <Styled.LoadingIndicator>Load more images...</Styled.LoadingIndicator>
+      )}
       {data && (
-        <LoadMoreButton
-          data-testid='loadmore-button'
+        <Button
+          dataTestId='loadmore-button'
           onClick={() => handleLoadMore()}
           disabled={isLoading}>
           {isLoading ? "LOADING" : "Load more"}
-        </LoadMoreButton>
+        </Button>
       )}
-    </Container>
+    </Styled.Container>
   );
 };

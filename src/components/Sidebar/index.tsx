@@ -1,71 +1,10 @@
+import { SidebarItem } from "./SideBarItem";
+import * as Styled from "./index.styles";
+import { Category } from "./SideBarItem/index.types";
 import { useDispatch } from "react-redux";
-import styled from "styled-components";
 import { setCategoryId } from "@/store/slices/categorySlice";
 import { revertAll } from "@/store/slices/imageSlice";
 import { useFetchCategory } from "@/services/useFetchCatgory";
-
-interface Category {
-  id: number;
-  name: string;
-}
-
-const SidebarWrapper = styled.aside`
-  width: 20%;
-  height: 25vh;
-  position: -webkit-sticky;
-  position: sticky;
-  top: 5%;
-`;
-
-const SideBarList = styled.ol`
-  list-style-type: none;
-  counter-reset: li;
-  padding: 0 5px;
-  margin: 0;
-  width: 100%;
-`;
-
-const SidebarItemWrapper = styled.li`
-  @media only screen and (min-width: 992px) {
-    font-size: 2rem;
-  }
-  @media only screen and (max-width: 600px) {
-    font-size: 0.8rem;
-    font-weight: bold;
-  }
-  height: 50px;
-  width: 100%;
-  padding: 5px 0 5px 5px;
-  cursor: pointer;
-  &:before {
-    counter-increment: li;
-    content: counter(li, decimal-leading-zero);
-    color: red;
-    margin-right: 0.25em;
-  }
-`;
-
-const LoadingIndicator = styled.span`
-  display: block;
-  text-align: center;
-  margin-top: 20px;
-`;
-
-const SidebarItem = ({
-  category,
-  onClick,
-}: {
-  category: Category;
-  onClick: () => void;
-}) => {
-  return (
-    <SidebarItemWrapper onClick={onClick}>
-      <span>
-        {category.name.charAt(0).toUpperCase() + category.name.slice(1)}
-      </span>
-    </SidebarItemWrapper>
-  );
-};
 
 export const Sidebar = () => {
   const { data, isLoading, error } = useFetchCategory();
@@ -78,12 +17,14 @@ export const Sidebar = () => {
   };
 
   if (isLoading)
-    return <LoadingIndicator>Categories Loading ...</LoadingIndicator>;
+    return (
+      <Styled.LoadingIndicator>Categories Loading ...</Styled.LoadingIndicator>
+    );
   if (error) return <span>Error: {error.message}</span>;
 
   return (
-    <SidebarWrapper>
-      <SideBarList>
+    <Styled.SidebarWrapper>
+      <Styled.SideBarList>
         {data &&
           data?.map((category: Category) => (
             <SidebarItem
@@ -92,7 +33,7 @@ export const Sidebar = () => {
               onClick={() => selectCategory(category.id)}
             />
           ))}
-      </SideBarList>
-    </SidebarWrapper>
+      </Styled.SideBarList>
+    </Styled.SidebarWrapper>
   );
 };

@@ -1,13 +1,6 @@
-import { Component, ErrorInfo, ReactNode } from "react";
-import * as styled from "./styles";
-
-interface Props {
-  children: ReactNode;
-}
-
-interface State {
-  hasError: boolean;
-}
+import { Component, ErrorInfo } from "react";
+import * as Styled from "./styles";
+import { Props, State } from "./index.types.d";
 
 export class ErrorBoundary extends Component<Props, State> {
   public state: State = {
@@ -25,10 +18,10 @@ export class ErrorBoundary extends Component<Props, State> {
   render() {
     if (this.state.hasError) {
       return (
-        <styled.ErrorContainer>
-          <styled.ErrorTitle>Error Title</styled.ErrorTitle>
+        <Styled.ErrorContainer>
+          <Styled.ErrorTitle>Error Title</Styled.ErrorTitle>
           <button>Retry</button>
-        </styled.ErrorContainer>
+        </Styled.ErrorContainer>
       );
     }
     return this.props.children;
