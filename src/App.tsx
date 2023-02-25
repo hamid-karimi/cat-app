@@ -1,9 +1,16 @@
-function App() {  
+import { RouterProvider } from "react-router-dom";
+import { router } from "@/routes";
+import { Suspense } from "react";
+import { ErrorBoundary } from "@/components/FallBack";
+
+function App() {
   return (
-    <div className="App">
-      <h1>Cat App</h1>
-    </div>
-  )
+    <ErrorBoundary>
+      <Suspense fallback={<p> Loading...</p>}>
+        <RouterProvider router={router} />
+      </Suspense>
+    </ErrorBoundary>
+  );
 }
 
-export default App
+export default App;
