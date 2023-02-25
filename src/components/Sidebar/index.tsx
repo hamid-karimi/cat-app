@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { setCategoryId } from "../../store/slices/categorySlice";
-import { revertAll } from "../../store/slices/imageSlice";
-import { useFetchCategory } from "../../services/useFetchCatgory";
+import { setCategoryId } from "@/store/slices/categorySlice";
+import { revertAll } from "@/store/slices/imageSlice";
+import { useFetchCategory } from "@/services/useFetchCatgory";
 
 interface Category {
   id: number;
@@ -45,6 +45,12 @@ const SidebarItemWrapper = styled.li`
   }
 `;
 
+const LoadingIndicator = styled.span`
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+`;
+
 const SidebarItem = ({
   category,
   onClick,
@@ -71,7 +77,8 @@ export const Sidebar = () => {
     dispatch(setCategoryId(id));
   };
 
-  if (isLoading) return <span>Loading...</span>;
+  if (isLoading)
+    return <LoadingIndicator>Categories Loading ...</LoadingIndicator>;
   if (error) return <span>Error: {error.message}</span>;
 
   return (

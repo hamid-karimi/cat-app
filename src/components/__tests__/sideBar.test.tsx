@@ -1,17 +1,17 @@
 import { render, fireEvent } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { Provider } from "react-redux";
-import { store } from "../../store/store";
-import { Sidebar } from "../../components/Sidebar";
-import { useFetchCategory } from "../../services/useFetchCatgory";
+import { store } from "@/store/store";
+import { Sidebar } from "@/components/Sidebar";
+import { useFetchCategory } from "@/services/useFetchCatgory";
 
-jest.mock("../../services/useFetchCatgory");
+jest.mock("@/services/useFetchCatgory");
 
 describe("Sidebar", () => {
   const mockData = [
-    { id: "1", name: "category 1" },
-    { id: "2", name: "category 2" },
-    { id: "3", name: "category 3" },
+    { id: 5, name: "boxes" },
+    { id: 15, name: "clothes" },
+    { id: 1, name: "hats" },
   ];
 
   beforeEach(() => {
@@ -54,7 +54,7 @@ describe("Sidebar", () => {
     fireEvent.click(firstCategoryElement);
 
     expect(store.getState()).toEqual({
-      category: { id: "1" },
+      category: { id: 5 },
       image: { images: [] },
     });
   });

@@ -4,4 +4,7 @@ export default {
     "^.+\\.ts?$": "ts-jest",
   },
   testEnvironment: "jest-environment-jsdom",
+  moduleNameMapper: {
+    "^@/(.*)$": ["<rootDir>/src/$1"],
+  },
 };

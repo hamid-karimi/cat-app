@@ -1,7 +1,14 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
-import { useFetchImages } from "../../services/useFetchImages";
+import { useFetchImages } from "@/services/useFetchImages";
+
+type images = {
+  id: string;
+  url: string;
+  width: number;
+  height: number;
+};
 
 const Container = styled.div`
   display: flex;
@@ -36,17 +43,14 @@ const ImgWrapper = styled.div`
   }
 `;
 
-const LoadMoreButton = styled.button(
-  ({ disabled }) => `
+const LoadMoreButton = styled.button`
   width: 50%;
   height: 30px;
   padding: 20px;
   margin: 20px auto;
   display: block;
   cursor: pointer;
-  
-`
-);
+`;
 
 const LoadingIndicator = styled.span`
   display: block;
@@ -64,13 +68,14 @@ export const CatImages = () => {
   };
 
   if (error) return <span>Error loading images</span>;
-  if (isLoading && imagesData.length === 0) return <span>Loading...</span>;
+  if (isLoading && imagesData.length === 0)
+    return <LoadingIndicator>Images Loading...</LoadingIndicator>;
 
   return (
     <Container>
       <ImagesContainer>
         {imagesData.flatMap((images) => {
-          return images.map((image: { id: string; url: string }) => {
+          return images.map((image: images) => {
             return (
               <ImgWrapper key={uuidv4()}>
                 <img loading='lazy' src={image.url} alt={image.id} />
@@ -79,6 +84,7 @@ export const CatImages = () => {
           });
         })}
       </ImagesContainer>
+      {isLoading && <LoadingIndicator>Load more images...</LoadingIndicator>}
       {data && (
         <LoadMoreButton
           data-testid='loadmore-button'
@@ -87,7 +93,6 @@ export const CatImages = () => {
           {isLoading ? "LOADING" : "Load more"}
         </LoadMoreButton>
       )}
-      {isLoading && <LoadingIndicator>Loading...</LoadingIndicator>}
     </Container>
   );
 };

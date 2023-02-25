@@ -1,8 +1,8 @@
-import { RootState } from "../store/store";
+import { RootState } from "@/store/store";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCatImagesByCategoryId } from ".";
-import { setImagesData } from "../store/slices/imageSlice";
+import { setImagesData } from "@/store/slices/imageSlice";
 
 type Image = {
   id: string;

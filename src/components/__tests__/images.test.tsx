@@ -1,9 +1,9 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import { CatImages } from "../Images";
-import { useFetchImages } from "../../services/useFetchImages";
+import { CatImages } from "@/components/CatImages";
+import { useFetchImages } from "@/services/useFetchImages";
 
-jest.mock("../../services/useFetchImages", () => ({
+jest.mock("@/services/useFetchImages", () => ({
   useFetchImages: jest.fn(() => ({
     data: true,
     imagesData: [
@@ -21,7 +21,7 @@ jest.mock("../../services/useFetchImages", () => ({
   })),
 }));
 
-describe.only("CatImages", () => {
+describe.only("CatImagess", () => {
   it("should render images", async () => {
     render(<CatImages />);
 
@@ -100,7 +100,7 @@ describe.only("CatImages", () => {
 
     render(<CatImages />);
 
-    const loadingIndicator = await screen.findByText("Loading...");
+    const loadingIndicator = await screen.findByText("Images Loading...");
     expect(loadingIndicator).toBeInTheDocument();
   });
 
