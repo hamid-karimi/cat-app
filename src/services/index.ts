@@ -7,7 +7,7 @@ export const getCatCategories = () => {
 };
 
 export const getCatImagesByCategoryId = (
-  categoryId: string | undefined,
+  categoryId: number | undefined,
   limit: string
 ) => {
   const path = `images/search`;

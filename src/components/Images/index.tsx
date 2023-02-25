@@ -70,7 +70,7 @@ export const CatImages = () => {
     <Container>
       <ImagesContainer>
         {imagesData.flatMap((images) => {
-          return images?.map((image: { id: string; url: string }) => {
+          return images.map((image: { id: string; url: string }) => {
             return (
               <ImgWrapper key={uuidv4()}>
                 <img loading='lazy' src={image.url} alt={image.id} />

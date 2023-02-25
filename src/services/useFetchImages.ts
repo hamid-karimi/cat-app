@@ -44,6 +44,5 @@ export const useFetchImages = (limit: string): FetchImagesResult => {
   useEffect(() => {
     if (data?.length > 0) dispatch(setImagesData(data));
   }, [data]);
-
   return { data, imagesData, isLoading, error };
 };
