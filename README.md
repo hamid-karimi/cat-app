@@ -1,6 +1,6 @@
-# Cat App
+# Cat App 🐈
 
-A simple web application to display and search for cat images. Built using React, React Redux, Redux Toolkit, Typescript, and Styled-components. The application allows users to search for cat images by breed, view image details, and save their favorite images.
+This is a web application that displays cat images randomly and based on categories, utilizing the CAT API. It's built using React, React Redux, Redux Toolkit, Typescript, Styled-components, Axios, and React Router. 
 
 ## Getting Started
 
@@ -29,7 +29,7 @@ bash
 yarn run dev
 ```
 
-The application should now be available at `http://localhost:3000/`.
+The application should now be available on your localhost.
 
 ## Running the tests
 
@@ -46,9 +46,11 @@ This will run the unit tests using React-testing-library and Jest.
 ## Technologies Used
 
 - React
+- Typescript
 - React Redux
 - Redux Toolkit
-- Typescript
+- Axios
+- React Router
 - Styled-components
 - React-testing-library
 - Jest
