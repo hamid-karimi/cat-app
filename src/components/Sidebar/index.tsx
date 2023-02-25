@@ -1,11 +1,11 @@
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import { setCategoryId } from "@/store/slices/categorySlice";
-import { revertAll } from "@/store/slices/imageSlice";
-import { useFetchCategory } from "@/services/useFetchCatgory";
+import { setCategoryId } from "../../store/slices/categorySlice";
+import { revertAll } from "../../store/slices/imageSlice";
+import { useFetchCategory } from "../../services/useFetchCatgory";
 
 interface Category {
-  id: string;
+  id: number;
   name: string;
 }
 
@@ -66,7 +66,7 @@ export const Sidebar = () => {
 
   const dispatch = useDispatch();
 
-  const selectCategory = (id: string) => {
+  const selectCategory = (id: number) => {
     dispatch(revertAll());
     dispatch(setCategoryId(id));
   };
@@ -78,7 +78,7 @@ export const Sidebar = () => {
     <SidebarWrapper>
       <SideBarList>
         {data &&
-          data.map((category: Category) => (
+          data?.map((category: Category) => (
             <SidebarItem
               key={category.id}
               category={category}

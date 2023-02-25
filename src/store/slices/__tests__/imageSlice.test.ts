@@ -9,32 +9,28 @@ const IMAGES_MOCK = {
 };
 
 describe("imageSlice", () => {
-  let store: EnhancedStore<{ images: ImagesState }, any>;
+  let store: EnhancedStore<ImagesState>;
 
   beforeEach(() => {
     store = configureStore({ reducer });
   });
 
   test("should add images to the state", () => {
-    const imagesData = IMAGES_MOCK;
+    const imagesData = [IMAGES_MOCK];
 
     store.dispatch(setImagesData(imagesData));
 
-    const actualResult = store.getState().images.images;
-    const expectedResult = [imagesData];
+    const actualResult = store.getState().images;
+    const expectedResult = imagesData;
 
     expect(actualResult).toEqual(expectedResult);
   });
 
   test("should revert state to initial state", () => {
-    store.dispatch(setImagesData(IMAGES_MOCK));
+    store.dispatch(setImagesData([IMAGES_MOCK]));
     store.dispatch(revertAll());
 
-    const actualResult = store.getState().images as ImagesState;
-    const expectedResult = {
-      images: [],
-    };
-
-    expect(actualResult).toEqual(expectedResult);
+    const actualResult = store.getState().images;
+    expect(actualResult).toEqual([]);
   });
 });

@@ -1,4 +1,4 @@
-import { useRequest } from "@/hooks/useRequest";
+import { useRequest } from "../hooks/useRequest";
 const request = useRequest();
 
 export const getCatCategories = () => {

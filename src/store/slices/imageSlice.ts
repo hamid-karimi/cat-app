@@ -1,5 +1,6 @@
 import { createAction, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import produce from "immer";
 
 type Image = {
   id: string;
@@ -20,8 +21,10 @@ export const imageSlice = createSlice({
   initialState,
   extraReducers: (builder) => builder.addCase(revertAll, () => initialState),
   reducers: {
-    setImagesData: (state, action: PayloadAction<Image>) => {
-      state.images.push(action.payload);
+    setImagesData: (state, action: PayloadAction<Image[]>) => {
+      return produce(state, (draftState) => {
+        draftState.images.push(...action.payload);
+      });
     },
   },
 });

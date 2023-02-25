@@ -1,10 +1,11 @@
 import { render, fireEvent } from "@testing-library/react";
+import "@testing-library/jest-dom";
 import { Provider } from "react-redux";
-import { store } from "@/store/store";
-import { Sidebar } from "@/components/Sidebar";
-import { useFetchCategory } from "@/services/useFetchCatgory";
+import { store } from "../../store/store";
+import { Sidebar } from "../../components/Sidebar";
+import { useFetchCategory } from "../../services/useFetchCatgory";
 
-jest.mock("@/services/useFetchCatgory");
+jest.mock("../../services/useFetchCatgory");
 
 describe("Sidebar", () => {
   const mockData = [
@@ -40,7 +41,7 @@ describe("Sidebar", () => {
   });
 
   it("should dispatch the correct actions when a category is clicked", () => {
-    const { getByText, store } = render(
+    const { getByText } = render(
       <Provider store={store}>
         <Sidebar />
       </Provider>
@@ -52,9 +53,9 @@ describe("Sidebar", () => {
 
     fireEvent.click(firstCategoryElement);
 
-    expect(store.getActions()).toEqual([
-      { type: "image/revertAll" },
-      { type: "category/setCategoryId", payload: mockData[0].id },
-    ]);
+    expect(store.getState()).toEqual({
+      category: { id: "1" },
+      image: { images: [] },
+    });
   });
 });

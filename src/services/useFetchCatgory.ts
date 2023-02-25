@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import { getCatCategories } from ".";
 
+type Category = {
+  id: number;
+  name: string;
+};
 export const useFetchCategory = () => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -24,6 +28,5 @@ export const useFetchCategory = () => {
 
     fetchCategories();
   }, []);
-
   return { data, isLoading, error };
 };

@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { v4 as uuidv4 } from "uuid";
-import { useFetchImages } from "@/services/useFetchImages";
+import { useFetchImages } from "../../services/useFetchImages";
 
 const Container = styled.div`
   display: flex;
@@ -36,14 +36,17 @@ const ImgWrapper = styled.div`
   }
 `;
 
-const LoadMoreButton = styled.button`
+const LoadMoreButton = styled.button(
+  ({ disabled }) => `
   width: 50%;
   height: 30px;
   padding: 20px;
   margin: 20px auto;
   display: block;
   cursor: pointer;
-`;
+  
+`
+);
 
 const LoadingIndicator = styled.span`
   display: block;
@@ -67,7 +70,7 @@ export const CatImages = () => {
     <Container>
       <ImagesContainer>
         {imagesData.flatMap((images) => {
-          return images.map((image: { id: string; url: string }) => {
+          return images?.map((image: { id: string; url: string }) => {
             return (
               <ImgWrapper key={uuidv4()}>
                 <img loading='lazy' src={image.url} alt={image.id} />
@@ -77,8 +80,11 @@ export const CatImages = () => {
         })}
       </ImagesContainer>
       {data && (
-        <LoadMoreButton onClick={() => handleLoadMore()}>
-          Load more
+        <LoadMoreButton
+          data-testid='loadmore-button'
+          onClick={() => handleLoadMore()}
+          disabled={isLoading}>
+          {isLoading ? "LOADING" : "Load more"}
         </LoadMoreButton>
       )}
       {isLoading && <LoadingIndicator>Loading...</LoadingIndicator>}

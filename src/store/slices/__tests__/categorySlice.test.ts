@@ -18,15 +18,15 @@ describe("categorySlice", () => {
     });
 
     it("should handle setCategoryId", () => {
-      const nextState = categoryReducer(initialState, setCategoryId("123"));
-      expect(nextState.id).toEqual("123");
+      const nextState = categoryReducer(initialState, setCategoryId(12));
+      expect(nextState.id).toEqual(12);
     });
   });
 
   describe("actions", () => {
     it("should create an action to set the category id", () => {
-      const expectedAction = { type: setCategoryId.type, payload: "123" };
-      expect(setCategoryId("123")).toEqual(expectedAction);
+      const expectedAction = { type: setCategoryId.type, payload: 12 };
+      expect(setCategoryId(12)).toEqual(expectedAction);
     });
   });
 });

@@ -1,8 +1,8 @@
-import { RootState } from "@/store/store";
+import { RootState } from "../store/store";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCatImagesByCategoryId } from ".";
-import { setImagesData } from "@/store/slices/imageSlice";
+import { setImagesData } from "../store/slices/imageSlice";
 
 type Image = {
   id: string;
@@ -20,7 +20,7 @@ interface FetchImagesResult {
 
 export const useFetchImages = (limit: string): FetchImagesResult => {
   const [data, setData] = useState<Image[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const dispatch = useDispatch();
@@ -29,22 +29,21 @@ export const useFetchImages = (limit: string): FetchImagesResult => {
 
   useEffect(() => {
     const fetchImages = async () => {
+      setIsLoading(true);
       try {
         const imagesData = await getCatImagesByCategoryId(categoryId, limit);
         setData(imagesData);
-        setIsLoading(false);
       } catch (error) {
         setError("Error fetching images.");
-        setIsLoading(false);
       }
+      setIsLoading(false);
     };
-
     fetchImages();
-  }, [categoryId, limit]);
+  }, [setData, limit, categoryId]);
 
   useEffect(() => {
     if (data?.length > 0) dispatch(setImagesData(data));
-  }, [data, dispatch]);
+  }, [data]);
 
   return { data, imagesData, isLoading, error };
 };
