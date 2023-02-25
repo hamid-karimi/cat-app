@@ -1,31 +1,15 @@
 import { Sidebar } from "@/components/Sidebar";
 import { CatImages } from "@/components/CatImages";
-import styled, { createGlobalStyle } from "styled-components";
-
-const GlobalStyles = createGlobalStyle`
-  body {
-    margin: 0;
-    padding: 0;
-  }
-`;
-
-const Container = styled.div`
-  width: 100%;
-  height: 100%;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: row;
-`;
-
+import * as Styled from "./index.styles";
 const HomePage = () => {
+  document.title = "Beautiful Cats";
   return (
     <>
-      <GlobalStyles />
-      <Container>
+      <Styled.GlobalStyles />
+      <Styled.Container>
         <Sidebar />
         <CatImages />
-      </Container>
+      </Styled.Container>
     </>
   );
 };

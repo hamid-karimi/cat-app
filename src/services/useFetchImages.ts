@@ -1,22 +1,9 @@
-import { RootState } from "@/store/store";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getCatImagesByCategoryId } from ".";
+import { Image, FetchImagesResult } from "./types/images.types.d";
+import { RootState } from "@/store/store";
 import { setImagesData } from "@/store/slices/imageSlice";
-
-type Image = {
-  id: string;
-  url: string;
-  width: number;
-  height: number;
-};
-
-interface FetchImagesResult {
-  data: Image[];
-  imagesData: any[];
-  isLoading: boolean;
-  error: string | null;
-}
 
 export const useFetchImages = (limit: string): FetchImagesResult => {
   const [data, setData] = useState<Image[]>([]);
