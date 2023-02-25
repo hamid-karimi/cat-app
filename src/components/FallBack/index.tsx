@@ -1,6 +1,5 @@
-import React, { Component, ErrorInfo } from "react";
+import { Component, ErrorInfo, ReactNode } from "react";
 import * as styled from "./styles";
-import { ReactNode } from "react";
 
 interface Props {
   children: ReactNode;

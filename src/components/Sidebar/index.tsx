@@ -1,10 +1,13 @@
-import { getCatCategories } from "@/services";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
 import { setCategoryId } from "@/store/slices/categorySlice";
 import { revertAll } from "@/store/slices/imageSlice";
-import { useEffect, useState } from "react";
 import { useFetchCategory } from "@/services/useFetchCatgory";
+
+interface Category {
+  id: number;
+  name: string;
+}
 
 const SidebarWrapper = styled.aside`
   width: 20%;
@@ -22,7 +25,7 @@ const SideBarList = styled.ol`
   width: 100%;
 `;
 
-const SidebarItem = styled.li`
+const SidebarItemWrapper = styled.li`
   @media only screen and (min-width: 992px) {
     font-size: 2rem;
   }
@@ -30,7 +33,6 @@ const SidebarItem = styled.li`
     font-size: 0.8rem;
     font-weight: bold;
   }
-
   height: 50px;
   width: 100%;
   padding: 5px 0 5px 5px;
@@ -43,29 +45,52 @@ const SidebarItem = styled.li`
   }
 `;
 
+const LoadingIndicator = styled.span`
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+`;
+
+const SidebarItem = ({
+  category,
+  onClick,
+}: {
+  category: Category;
+  onClick: () => void;
+}) => {
+  return (
+    <SidebarItemWrapper onClick={onClick}>
+      <span>
+        {category.name.charAt(0).toUpperCase() + category.name.slice(1)}
+      </span>
+    </SidebarItemWrapper>
+  );
+};
+
 export const Sidebar = () => {
-  const { data, isLoading } = useFetchCategory();
+  const { data, isLoading, error } = useFetchCategory();
 
   const dispatch = useDispatch();
-  const selectCategory = (id: string) => {
+
+  const selectCategory = (id: number) => {
     dispatch(revertAll());
     dispatch(setCategoryId(id));
   };
 
-  if (isLoading) return <span>Loading...</span>;
+  if (isLoading)
+    return <LoadingIndicator>Categories Loading ...</LoadingIndicator>;
+  if (error) return <span>Error: {error.message}</span>;
 
   return (
     <SidebarWrapper>
       <SideBarList>
-        {data?.length > 0 &&
-          data?.map((category: any) => (
+        {data &&
+          data?.map((category: Category) => (
             <SidebarItem
               key={category.id}
-              onClick={() => selectCategory(category.id)}>
-              <span>
-                {category.name.charAt(0).toUpperCase() + category.name.slice(1)}
-              </span>
-            </SidebarItem>
+              category={category}
+              onClick={() => selectCategory(category.id)}
+            />
           ))}
       </SideBarList>
     </SidebarWrapper>

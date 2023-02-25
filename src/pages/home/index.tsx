@@ -1,5 +1,5 @@
 import { Sidebar } from "@/components/Sidebar";
-import { CatImages } from "@/components/Images";
+import { CatImages } from "@/components/CatImages";
 import styled, { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`

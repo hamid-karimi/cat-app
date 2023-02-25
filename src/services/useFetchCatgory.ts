@@ -1,19 +1,32 @@
 import { useEffect, useState } from "react";
 import { getCatCategories } from ".";
 
+type Category = {
+  id: number;
+  name: string;
+};
 export const useFetchCategory = () => {
-  const [data, setData] = useState();
+  const [data, setData] = useState<Category[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
     const fetchCategories = async () => {
-      const categoriesData = await getCatCategories();
-      setData(categoriesData);
-      setIsLoading(false);
+      try {
+        const categoriesData = await getCatCategories();
+        setData(categoriesData);
+        setIsLoading(false);
+      } catch (err: unknown) {
+        if (err instanceof Error) {
+          setError(err);
+        } else {
+          setError(new Error("Unknown error occurred"));
+        }
+        setIsLoading(false);
+      }
     };
 
     fetchCategories();
   }, []);
-
-  return { data, isLoading };
+  return { data, isLoading, error };
 };

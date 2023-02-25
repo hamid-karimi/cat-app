@@ -4,9 +4,24 @@ import { useDispatch, useSelector } from "react-redux";
 import { getCatImagesByCategoryId } from ".";
 import { setImagesData } from "@/store/slices/imageSlice";
 
-export const useFetchImages = (limit: string) => {
-  const [data, setData] = useState<any>();
-  const [isLoading, setIsLoading] = useState(true);
+type Image = {
+  id: string;
+  url: string;
+  width: number;
+  height: number;
+};
+
+interface FetchImagesResult {
+  data: Image[];
+  imagesData: any[];
+  isLoading: boolean;
+  error: string | null;
+}
+
+export const useFetchImages = (limit: string): FetchImagesResult => {
+  const [data, setData] = useState<Image[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const dispatch = useDispatch();
   const categoryId = useSelector((state: RootState) => state.category.id);
@@ -14,17 +29,20 @@ export const useFetchImages = (limit: string) => {
 
   useEffect(() => {
     const fetchImages = async () => {
-      const imagesData = await getCatImagesByCategoryId(categoryId, limit);
-      setData(imagesData);
+      setIsLoading(true);
+      try {
+        const imagesData = await getCatImagesByCategoryId(categoryId, limit);
+        setData(imagesData);
+      } catch (error) {
+        setError("Error fetching images.");
+      }
       setIsLoading(false);
     };
-
     fetchImages();
-  }, [categoryId, limit]);
+  }, [setData, limit, categoryId]);
 
   useEffect(() => {
     if (data?.length > 0) dispatch(setImagesData(data));
-  }, [data, dispatch]);
-
-  return { data, imagesData, isLoading };
+  }, [data]);
+  return { data, imagesData, isLoading, error };
 };
