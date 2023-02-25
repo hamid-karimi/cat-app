@@ -18,7 +18,7 @@ bash
 
 ```bash
 cd cat-app
-yarn install
+yarn
 ```
 
 Start the development server:
@@ -54,3 +54,4 @@ This will run the unit tests using React-testing-library and Jest.
 - Styled-components
 - React-testing-library
 - Jest
+- Vite
