@@ -1,4 +1,4 @@
-import { useRequest } from "@/hooks/useRequest";
+import {useRequest} from '@/hooks/useRequest';
 const request = useRequest();
 
 export const getCatCategories = () => {
@@ -8,7 +8,7 @@ export const getCatCategories = () => {
 
 export const getCatImagesByCategoryId = (
   categoryId: number | undefined,
-  limit: string
+  limit: string,
 ) => {
   const path = `images/search`;
   return request.get(path, {

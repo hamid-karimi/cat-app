@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const SidebarItemWrapper = styled.li`
   height: 50px;

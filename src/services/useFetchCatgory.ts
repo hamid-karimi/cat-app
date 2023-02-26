@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { getCatCategories } from ".";
-import { Category } from "./types/category.types.d";
+import {useEffect, useState} from 'react';
+import {getCatCategories} from '.';
+import {Category} from './types/category.types.d';
 
 export const useFetchCategory = () => {
   const [data, setData] = useState<Category[]>([]);
@@ -17,7 +17,7 @@ export const useFetchCategory = () => {
         if (err instanceof Error) {
           setError(err);
         } else {
-          setError(new Error("Unknown error occurred"));
+          setError(new Error('Unknown error occurred'));
         }
         setIsLoading(false);
       }
@@ -25,5 +25,5 @@ export const useFetchCategory = () => {
 
     fetchCategories();
   }, []);
-  return { data, isLoading, error };
+  return {data, isLoading, error};
 };
