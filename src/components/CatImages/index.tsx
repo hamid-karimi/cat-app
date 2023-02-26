@@ -1,14 +1,14 @@
-import { useState } from "react";
-import * as Styled from "./index.styles";
-import { v4 as uuidv4 } from "uuid";
-import { useFetchImages } from "@/services/useFetchImages";
-import Button from "@/components/Common/Button";
-import Image from "@/components/Common/Image";
-import { ImageProps } from "@/components/types/images.types";
+import {useState} from 'react';
+import * as Styled from './index.styles';
+import {v4 as uuidv4} from 'uuid';
+import {useFetchImages} from '@/services/useFetchImages';
+import Button from '@/components/Common/Button';
+import Image from '@/components/Common/Image';
+import {ImageProps} from '@/components/types/images.types';
 
 export const CatImages = () => {
-  const [limit, setLimit] = useState("10");
-  const { data, imagesData, isLoading, error } = useFetchImages(limit);
+  const [limit, setLimit] = useState('10');
+  const {data, imagesData, isLoading, error} = useFetchImages(limit);
 
   const handleLoadMore = () => {
     const newLimit = (+limit + 10).toString();
@@ -23,7 +23,7 @@ export const CatImages = () => {
     <Styled.Container>
       <Styled.ImagesContainer>
         {imagesData.flatMap((images) => {
-          return images.map((image: ImageProps) => {
+          return Object.values(images as ImageProps).map((image) => {
             return (
               <Image
                 key={uuidv4()}
@@ -41,10 +41,11 @@ export const CatImages = () => {
       )}
       {data && (
         <Button
-          dataTestId='loadmore-button'
+          dataTestId="loadmore-button"
           onClick={() => handleLoadMore()}
-          disabled={isLoading}>
-          {isLoading ? "LOADING" : "Load more"}
+          disabled={isLoading}
+        >
+          {isLoading ? 'LOADING' : 'Load more'}
         </Button>
       )}
     </Styled.Container>

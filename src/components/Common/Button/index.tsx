@@ -1,5 +1,5 @@
-import * as Styled from "./index.styles";
-import { ButtonProps } from "./index.types.d";
+import * as Styled from './index.styles';
+import {ButtonProps} from './index.types.d';
 
 const Button: React.FC<ButtonProps> = ({
   children,
@@ -11,7 +11,8 @@ const Button: React.FC<ButtonProps> = ({
     <Styled.ButtonWrapper
       data-testid={dataTestId}
       onClick={onClick}
-      disabled={disabled}>
+      disabled={disabled}
+    >
       {children}
     </Styled.ButtonWrapper>
   );

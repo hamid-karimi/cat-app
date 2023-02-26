@@ -7,7 +7,7 @@ export type Image = {
 
 export interface FetchImagesResult {
   data: Image[];
-  imagesData: any[];
+  imagesData: Image[];
   isLoading: boolean;
   error: string | null;
 }

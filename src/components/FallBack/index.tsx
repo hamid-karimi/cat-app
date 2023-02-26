@@ -1,6 +1,6 @@
-import { Component, ErrorInfo } from "react";
-import * as Styled from "./styles";
-import { Props, State } from "./index.types.d";
+import {Component, ErrorInfo} from 'react';
+import * as Styled from './styles';
+import {Props, State} from './index.types.d';
 
 export class ErrorBoundary extends Component<Props, State> {
   public state: State = {
@@ -8,11 +8,11 @@ export class ErrorBoundary extends Component<Props, State> {
   };
 
   public static getDerivedStateFromError(_: Error): State {
-    return { hasError: true };
+    return {hasError: true};
   }
 
   public componentDidCatch(error: Error, errorInfo: ErrorInfo) {
-    console.error("Uncaught error:", error, errorInfo);
+    console.error('Uncaught error:', error, errorInfo);
   }
 
   render() {

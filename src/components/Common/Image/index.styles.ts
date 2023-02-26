@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ImgWrapper = styled.div`
   border-radius: 8px;
@@ -6,7 +6,7 @@ export const ImgWrapper = styled.div`
   position: relative;
 
   &::before {
-    content: "";
+    content: '';
     display: block;
     padding-bottom: 60%;
   }
