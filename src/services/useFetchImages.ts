@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getCatImagesByCategoryId } from ".";
-import { Image, FetchImagesResult } from "./types/images.types.d";
-import { RootState } from "@/store/store";
-import { setImagesData } from "@/store/slices/imageSlice";
+import {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
+import {getCatImagesByCategoryId} from '.';
+import {Image, FetchImagesResult} from './types/images.types.d';
+import {RootState} from '@/store/store';
+import {setImagesData} from '@/store/slices/imageSlice';
 
 export const useFetchImages = (limit: string): FetchImagesResult => {
   const [data, setData] = useState<Image[]>([]);
@@ -21,7 +21,7 @@ export const useFetchImages = (limit: string): FetchImagesResult => {
         const imagesData = await getCatImagesByCategoryId(categoryId, limit);
         setData(imagesData);
       } catch (error) {
-        setError("Error fetching images.");
+        setError('Error fetching images.');
       }
       setIsLoading(false);
     };
@@ -31,5 +31,5 @@ export const useFetchImages = (limit: string): FetchImagesResult => {
   useEffect(() => {
     if (data?.length > 0) dispatch(setImagesData(data));
   }, [data]);
-  return { data, imagesData, isLoading, error };
+  return {data, imagesData, isLoading, error};
 };

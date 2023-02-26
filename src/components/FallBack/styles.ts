@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const ErrorContainer = styled.div`
   display: flex;
@@ -9,5 +9,5 @@ export const ErrorContainer = styled.div`
 `;
 
 export const ErrorTitle = styled.h2`
-  margin-bottom: "3rem";
+  margin-bottom: '3rem';
 `;

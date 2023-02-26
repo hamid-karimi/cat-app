@@ -1,7 +1,7 @@
-import { configureStore } from "@reduxjs/toolkit";
-import logger from "redux-logger";
-import imageSlice from "./slices/imageSlice";
-import categorySlice from "./slices/categorySlice";
+import {configureStore} from '@reduxjs/toolkit';
+import logger from 'redux-logger';
+import imageSlice from './slices/imageSlice';
+import categorySlice from './slices/categorySlice';
 
 export const store = configureStore({
   reducer: {

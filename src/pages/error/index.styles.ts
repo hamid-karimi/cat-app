@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import { BackgroundProps } from "./index.types.d";
+import styled from 'styled-components';
+import {BackgroundProps} from './index.types.d';
 
 export const Background = styled.div<BackgroundProps>`
   width: 100%;

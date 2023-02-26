@@ -1,4 +1,4 @@
-import client from "@/gate/config";
+import client from '@/gate/config';
 export const useRequest = () => {
   const request = {
     //fix the params type
